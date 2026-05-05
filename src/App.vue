@@ -2,6 +2,16 @@
   <div class="app">
     <h1>Generador de PDF</h1>
     <p>Ejemplo con cabecera, pie de página y paginación usando <strong>vue-pdfmake</strong>.</p>
+    <p class="linkedin">
+      <a href="https://www.linkedin.com/in/etomas-ti/" target="_blank" rel="noopener noreferrer">
+        Visita mi LinkedIn
+      </a>
+    </p>
+    <p class="whatsapp">
+      <a href="https://wa.me/51941628111" target="_blank" rel="noopener noreferrer">
+        Escríbeme por WhatsApp
+      </a>
+    </p>
     <ReporteEjemplo />
   </div>
 </template>
@@ -38,5 +48,25 @@ h1 {
 p {
   color: #555;
   margin-bottom: 2rem;
+}
+
+.linkedin a {
+  color: #0a66c2;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.linkedin a:hover {
+  text-decoration: underline;
+}
+
+.whatsapp a {
+  color: #25d366;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.whatsapp a:hover {
+  text-decoration: underline;
 }
 </style>
