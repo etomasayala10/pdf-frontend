@@ -8,7 +8,7 @@
       </a>
     </p>
     <p class="whatsapp">
-      <a href="https://wa.me/51941628111" target="_blank" rel="noopener noreferrer">
+      <a href="https://wa.me/51943909993" target="_blank" rel="noopener noreferrer">
         Escríbeme por WhatsApp
       </a>
     </p>
