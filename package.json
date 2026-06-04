@@ -7,8 +7,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "echarts": "^6.1.0",
+    "pdfmake": "^0.2.10",
     "vue": "^3.4.0",
-    "pdfmake": "^0.2.10"
+    "vue-echarts": "^8.0.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.0",
