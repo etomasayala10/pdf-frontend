@@ -21,10 +21,19 @@ defineProps({
   border: 1px solid #e5e7eb;
   border-radius: 10px;
   padding: 8px;
+  overflow: hidden; /* evita que un gráfico ancho desborde la tarjeta */
+  box-sizing: border-box;
 }
 
 .chart {
   width: 100%;
   height: 300px;
+}
+
+/* En móvil un poco más de alto para compensar el menor ancho */
+@media (max-width: 640px) {
+  .chart {
+    height: 260px;
+  }
 }
 </style>

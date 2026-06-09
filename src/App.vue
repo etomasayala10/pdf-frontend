@@ -2,17 +2,18 @@
   <div class="app">
     <h1>Generador de PDF</h1>
     <p>Ejemplo con cabecera, pie de página y paginación usando <strong>vue-pdfmake</strong>.</p>
-    <p class="linkedin">
-      <a href="https://www.linkedin.com/in/etomas-ti/" target="_blank" rel="noopener noreferrer">
+    <ReporteEjemplo />
+
+    <!-- Enlaces sociales: flotantes y siempre visibles al hacer scroll -->
+    <nav class="social-flotante" aria-label="Redes y contacto">
+      <p class="disclaimer">💬 Si necesitas ayuda con tus proyectos o ideas, contáctame</p>
+      <a class="enlace linkedin" href="https://www.linkedin.com/in/etomas-ti/" target="_blank" rel="noopener noreferrer">
         Visita mi LinkedIn
       </a>
-    </p>
-    <p class="whatsapp">
-      <a href="https://wa.me/51943909993" target="_blank" rel="noopener noreferrer">
+      <a class="enlace whatsapp" href="https://wa.me/51943909993" target="_blank" rel="noopener noreferrer">
         Escríbeme por WhatsApp
       </a>
-    </p>
-    <ReporteEjemplo />
+    </nav>
   </div>
 </template>
 
@@ -36,7 +37,7 @@ body {
 .app {
   max-width: 720px;
   margin: 0 auto;
-  padding: 3rem 2rem;
+  padding: 3rem 2rem 7rem;
 }
 
 h1 {
@@ -50,23 +51,70 @@ p {
   margin-bottom: 2rem;
 }
 
-.linkedin a {
-  color: #0a66c2;
+/* Menú flotante de redes: fijo en la esquina superior izquierda */
+.social-flotante {
+  position: fixed;
+  left: 1.25rem;
+  top: 1.25rem;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 220px;
+  padding: 14px 16px;
+  background: #ffffff;
+  border: 2px solid #1a1a1a;
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+}
+
+.social-flotante .disclaimer {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.3;
+}
+
+.social-flotante .enlace {
+  display: block;
+  text-align: center;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: #ffffff;
+  padding: 9px 12px;
+  border-radius: 8px;
+  transition: opacity 0.15s, transform 0.1s;
 }
 
-.linkedin a:hover {
-  text-decoration: underline;
+.social-flotante .enlace:hover {
+  opacity: 0.9;
 }
 
-.whatsapp a {
-  color: #25d366;
-  text-decoration: none;
-  font-weight: 500;
+.social-flotante .enlace:active {
+  transform: scale(0.97);
 }
 
-.whatsapp a:hover {
-  text-decoration: underline;
+.social-flotante .linkedin {
+  background: #0a66c2;
+}
+
+.social-flotante .whatsapp {
+  background: #25d366;
+}
+
+/* En móvil se ocultan los flotantes; las acciones pasan a la barra inferior
+   fija (estilo iOS) definida en ReporteEjemplo.vue */
+@media (max-width: 640px) {
+  .social-flotante {
+    display: none;
+  }
+
+  .app {
+    /* Menos padding lateral para dar ancho a los gráficos;
+       espacio inferior para que la barra fija no tape el contenido */
+    padding: 1.5rem 0.75rem 5.5rem;
+  }
 }
 </style>

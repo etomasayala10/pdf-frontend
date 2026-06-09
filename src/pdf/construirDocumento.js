@@ -6,9 +6,7 @@ import { ventas, calcularTotales } from '../data/ventas.js'
 import { urlABase64 } from '../utils/imagen.js'
 import { opcionAImagen } from '../utils/echart.js'
 
-import { opcionVentasPorTrimestre } from '../charts/opciones/ventasPorTrimestre.js'
-import { opcionTendenciaUtilidad } from '../charts/opciones/tendenciaUtilidad.js'
-import { opcionDistribucionGastos } from '../charts/opciones/distribucionGastos.js'
+import { GRAFICOS } from '../charts/registro.js'
 
 import { crearHeader } from './elementos/header.js'
 import { crearFooter } from './elementos/footer.js'
@@ -27,15 +25,20 @@ const RUTA_IMAGEN_MUESTRA = '/images/image01.png'
 export async function construirDocumento({ empresa, anio }) {
   const totales = calcularTotales(ventas)
 
-  // Recursos asíncronos: logo, imagen de muestra y gráficos → base64.
-  // Se cargan en paralelo para mayor velocidad.
-  const [logoBase64, imagenMuestra, imgVentas, imgTendencia, imgGastos] = await Promise.all([
+  // Recursos asíncronos: logo, imagen de muestra y TODOS los gráficos del
+  // registro → base64. Se cargan en paralelo para mayor velocidad.
+  const [logoBase64, imagenMuestra, ...imagenesGraficos] = await Promise.all([
     urlABase64(RUTA_LOGO),
     urlABase64(RUTA_IMAGEN_MUESTRA),
-    opcionAImagen(opcionVentasPorTrimestre(ventas)),
-    opcionAImagen(opcionTendenciaUtilidad(ventas)),
-    opcionAImagen(opcionDistribucionGastos(), { ancho: 600, alto: 420 }),
+    ...GRAFICOS.map((g) => opcionAImagen(g.opcion(), g.tamano)),
   ])
+
+  // Empareja cada gráfico del registro con su imagen para la sección del PDF.
+  const graficosPdf = GRAFICOS.map((g, i) => ({
+    titulo: g.titulo,
+    imagenBase64: imagenesGraficos[i],
+    ancho: g.anchoPdf,
+  }))
 
   return {
     info: {
@@ -55,13 +58,7 @@ export async function construirDocumento({ empresa, anio }) {
         imagenBase64: imagenMuestra,
         pie: 'Figura 1. Imagen de ejemplo embebida en el PDF.',
       }),
-      ...seccionGraficos({
-        graficos: [
-          { titulo: 'Ventas por trimestre', imagenBase64: imgVentas },
-          { titulo: 'Tendencia de utilidad', imagenBase64: imgTendencia },
-          { titulo: 'Distribución de gastos', imagenBase64: imgGastos, ancho: 360 },
-        ],
-      }),
+      ...seccionGraficos({ graficos: graficosPdf }),
       ...seccionTablaTrimestral({ empresa, anio, ventas, totales }),
     ],
 
